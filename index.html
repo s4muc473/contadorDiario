@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Tempo para Data Futura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
+                ⏰ Contador de Tempo
+            </h1>
+            <p class="text-lg text-gray-600">
+                Descubra quantos sábados, semanas, dias e horas faltam para sua data especial
+            </p>
+        </div>
+
+        <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+    
+            <div class="mb-8">
+                <label for="dataFutura" class="block text-sm font-semibold text-gray-700 mb-3">
+                    📅 Selecione uma data futura:
+                </label>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input 
+                        type="date" 
+                        id="dataFutura" 
+                        class="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 text-gray-700"
+                    >
+                    <button 
+                        id="calcularBtn" 
+                        class="px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
+                    >
+                        🚀 Calcular
+                    </button>
+                </div>
+            </div>
+
+            <div id="mensagemErro" class="hidden mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
+                <div class="flex items-center">
+                    <span class="text-red-600 font-medium">⚠️ <span id="textoErro"></span></span>
+                </div>
+            </div>
+
+       
+            <div id="resultados" class="hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    📊 Tempo Restante
+                </h2>
+                
+          
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                   
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl text-center border border-purple-200">
+                        <div class="text-3xl mb-2">🗓️</div>
+                        <div id="sabados" class="text-3xl font-bold text-purple-600 mb-1">0</div>
+                        <div class="text-sm font-medium text-purple-700">Sábados</div>
+                    </div>
+
+                 
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl text-center border border-green-200">
+                        <div class="text-3xl mb-2">📅</div>
+                        <div id="semanas" class="text-3xl font-bold text-green-600 mb-1">0</div>
+                        <div class="text-sm font-medium text-green-700">Semanas</div>
+                    </div>
+
+                 
+                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl text-center border border-orange-200">
+                        <div class="text-3xl mb-2">☀️</div>
+                        <div id="dias" class="text-3xl font-bold text-orange-600 mb-1">0</div>
+                        <div class="text-sm font-medium text-orange-700">Dias</div>
+                    </div>
+
+               
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl text-center border border-blue-200">
+                        <div class="text-3xl mb-2">⏰</div>
+                        <div id="horas" class="text-3xl font-bold text-blue-600 mb-1">0</div>
+                        <div class="text-sm font-medium text-blue-700">Horas</div>
+                    </div>
+                </div>
+
+                
+                <div class="bg-gray-50 p-4 rounded-xl text-center">
+                    <span class="text-gray-600">🎯 Data selecionada: </span>
+                    <span id="dataSelecionada" class="font-semibold text-gray-800"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="text-center mt-8 text-gray-500 text-sm">
+            <p>💡 Dica: Sua última data calculada é salva automaticamente!</p>
+        </div>
+    </div>
+
+    <script>
+       
+        const inputData = document.getElementById('dataFutura');
+        const btnCalcular = document.getElementById('calcularBtn');
+        const mensagemErro = document.getElementById('mensagemErro');
+        const textoErro = document.getElementById('textoErro');
+        const resultados = document.getElementById('resultados');
+        const elementoSabados = document.getElementById('sabados');
+        const elementoSemanas = document.getElementById('semanas');
+        const elementoDias = document.getElementById('dias');
+        const elementoHoras = document.getElementById('horas');
+        const dataSelecionada = document.getElementById('dataSelecionada');
+
+       
+        function configurarDataMinima() {
+            const hoje = new Date();
+            const dataFormatada = hoje.toISOString().split('T')[0];
+            inputData.min = dataFormatada;
+        }
+
+        function salvarDataNoStorage(data) {
+            localStorage.setItem('ultimaDataCalculada', data);
+        }
+
+    
+        function carregarDataDoStorage() {
+            const dataSalva = localStorage.getItem('ultimaDataCalculada');
+            if (dataSalva) {
+                inputData.value = dataSalva;
+             
+                const dataFutura = new Date(dataSalva);
+                const hoje = new Date();
+                if (dataFutura > hoje) {
+                    calcularTempo();
+                }
+            }
+        }
+
+      
+        function limparInterface() {
+            mensagemErro.classList.add('hidden');
+            resultados.classList.add('hidden');
+        }
+
+
+        function exibirErro(mensagem) {
+            textoErro.textContent = mensagem;
+            mensagemErro.classList.remove('hidden');
+            resultados.classList.add('hidden');
+        }
+
+
+        function validarEntrada() {
+            const dataInput = inputData.value;
+            
+ 
+            if (!dataInput) {
+                exibirErro('Por favor, selecione uma data.');
+                return false;
+            }
+
+    
+            const dataFutura = new Date(dataInput);
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+            dataFutura.setHours(0, 0, 0, 0);
+
+            if (dataFutura <= hoje) {
+                exibirErro('A data selecionada deve ser uma data futura.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function contarSabados(dataInicio, dataFim) {
+            let contador = 0;
+            const dataAtual = new Date(dataInicio);
+            
+          
+            while (dataAtual < dataFim) {
+              
+                if (dataAtual.getDay() === 6) {
+                    contador++;
+                }
+              
+                dataAtual.setDate(dataAtual.getDate() + 1);
+            }
+            
+            return contador;
+        }
+
+    
+        function calcularTempo() {
+         
+            limparInterface();
+
+            
+            if (!validarEntrada()) {
+                return;
+            }
+
+            const hoje = new Date();
+            const dataFutura = new Date(inputData.value);
+            
+       
+            const diferencaMs = dataFutura.getTime() - hoje.getTime();
+            
+
+            const horasRestantes = Math.floor(diferencaMs / (1000 * 60 * 60));
+            const diasRestantes = Math.floor(diferencaMs / (1000 * 60 * 60 * 24));
+            const semanasRestantes = Math.floor(diasRestantes / 7);
+            
+  
+            const sabadosRestantes = contarSabados(hoje, dataFutura);
+   
+            elementoSabados.textContent = sabadosRestantes;
+            elementoSemanas.textContent = semanasRestantes;
+            elementoDias.textContent = diasRestantes;
+            elementoHoras.textContent = horasRestantes.toLocaleString('pt-BR');
+
+            const dataFormatada = dataFutura.toLocaleDateString('pt-BR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            dataSelecionada.textContent = dataFormatada;
+            
+          
+            resultados.classList.remove('hidden');
+            
+    
+            salvarDataNoStorage(inputData.value);
+        }
+
+
+        btnCalcular.addEventListener('click', calcularTempo);
+        
+        
+        inputData.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calcularTempo();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            configurarDataMinima();
+            carregarDataDoStorage();
+        });
+    </script>
+</body>
+</html>
