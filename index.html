@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contador de Tempo para Data Futura</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
+        // Configuração do Tailwind para usar a fonte Inter
         tailwind.config = {
             theme: {
                 extend: {
@@ -20,6 +23,7 @@
 </head>
 <body class="font-inter bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
     <div class="container mx-auto px-4 py-8">
+        <!-- Título Principal -->
         <div class="text-center mb-8">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
                 ⏰ Contador de Tempo
@@ -29,8 +33,9 @@
             </p>
         </div>
 
+        <!-- Card Principal -->
         <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-    
+            <!-- Formulário de Entrada -->
             <div class="mb-8">
                 <label for="dataFutura" class="block text-sm font-semibold text-gray-700 mb-3">
                     📅 Selecione uma data futura:
@@ -50,42 +55,43 @@
                 </div>
             </div>
 
+            <!-- Área de Mensagens de Erro -->
             <div id="mensagemErro" class="hidden mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
                 <div class="flex items-center">
                     <span class="text-red-600 font-medium">⚠️ <span id="textoErro"></span></span>
                 </div>
             </div>
 
-       
+            <!-- Resultados -->
             <div id="resultados" class="hidden">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
                     📊 Tempo Restante
                 </h2>
                 
-          
+                <!-- Grid Principal de Resultados -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                   
+                    <!-- Sábados -->
                     <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl text-center border border-purple-200">
                         <div class="text-3xl mb-2">🗓️</div>
                         <div id="sabados" class="text-3xl font-bold text-purple-600 mb-1">0</div>
                         <div class="text-sm font-medium text-purple-700">Sábados</div>
                     </div>
 
-                 
+                    <!-- Semanas -->
                     <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl text-center border border-green-200">
                         <div class="text-3xl mb-2">📅</div>
                         <div id="semanas" class="text-3xl font-bold text-green-600 mb-1">0</div>
                         <div class="text-sm font-medium text-green-700">Semanas</div>
                     </div>
 
-                 
+                    <!-- Dias -->
                     <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl text-center border border-orange-200">
                         <div class="text-3xl mb-2">☀️</div>
                         <div id="dias" class="text-3xl font-bold text-orange-600 mb-1">0</div>
                         <div class="text-sm font-medium text-orange-700">Dias</div>
                     </div>
 
-               
+                    <!-- Horas -->
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl text-center border border-blue-200">
                         <div class="text-3xl mb-2">⏰</div>
                         <div id="horas" class="text-3xl font-bold text-blue-600 mb-1">0</div>
@@ -93,22 +99,86 @@
                     </div>
                 </div>
 
-                
+                <!-- Seção de Dias da Semana -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">
+                        📆 Dias da Semana Específicos
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Segundas -->
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-xl text-center border border-red-200">
+                            <div class="text-2xl mb-2">🔴</div>
+                            <div id="segundas" class="text-2xl font-bold text-red-600 mb-1">0</div>
+                            <div class="text-sm font-medium text-red-700">Segundas</div>
+                        </div>
+
+                        <!-- Terças -->
+                        <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 rounded-xl text-center border border-yellow-200">
+                            <div class="text-2xl mb-2">🟡</div>
+                            <div id="tercas" class="text-2xl font-bold text-yellow-600 mb-1">0</div>
+                            <div class="text-sm font-medium text-yellow-700">Terças</div>
+                        </div>
+
+                        <!-- Quartas -->
+                        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-4 rounded-xl text-center border border-indigo-200">
+                            <div class="text-2xl mb-2">🔵</div>
+                            <div id="quartas" class="text-2xl font-bold text-indigo-600 mb-1">0</div>
+                            <div class="text-sm font-medium text-indigo-700">Quartas</div>
+                        </div>
+
+                        <!-- Dias Úteis -->
+                        <div class="bg-gradient-to-br from-teal-50 to-teal-100 p-4 rounded-xl text-center border border-teal-200">
+                            <div class="text-2xl mb-2">💼</div>
+                            <div id="diasUteis" class="text-2xl font-bold text-teal-600 mb-1">0</div>
+                            <div class="text-sm font-medium text-teal-700">Dias Úteis</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção de Horas por Dia da Semana -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">
+                        ⏱️ Horas por Dia da Semana
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- Horas de Segundas -->
+                        <div class="bg-gradient-to-br from-pink-50 to-pink-100 p-4 rounded-xl text-center border border-pink-200">
+                            <div class="text-xl mb-2">🕐</div>
+                            <div id="horasSegundas" class="text-xl font-bold text-pink-600 mb-1">0</div>
+                            <div class="text-sm font-medium text-pink-700">Horas de Segundas</div>
+                        </div>
+
+                        <!-- Horas de Terças -->
+                        <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-4 rounded-xl text-center border border-amber-200">
+                            <div class="text-xl mb-2">🕑</div>
+                            <div id="horasTercas" class="text-xl font-bold text-amber-600 mb-1">0</div>
+                            <div class="text-sm font-medium text-amber-700">Horas de Terças</div>
+                        </div>
+
+                        <!-- Horas de Quartas -->
+                        <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 p-4 rounded-xl text-center border border-cyan-200">
+                            <div class="text-xl mb-2">🕒</div>
+                            <div id="horasQuartas" class="text-xl font-bold text-cyan-600 mb-1">0</div>
+                            <div class="text-sm font-medium text-cyan-700">Horas de Quartas</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Selecionada -->
                 <div class="bg-gray-50 p-4 rounded-xl text-center">
                     <span class="text-gray-600">🎯 Data selecionada: </span>
                     <span id="dataSelecionada" class="font-semibold text-gray-800"></span>
                 </div>
             </div>
-        </div>
 
-
+        <!-- Rodapé -->
         <div class="text-center mt-8 text-gray-500 text-sm">
             <p>💡 Dica: Sua última data calculada é salva automaticamente!</p>
         </div>
     </div>
 
     <script>
-       
+        // Elementos do DOM
         const inputData = document.getElementById('dataFutura');
         const btnCalcular = document.getElementById('calcularBtn');
         const mensagemErro = document.getElementById('mensagemErro');
@@ -119,24 +189,32 @@
         const elementoDias = document.getElementById('dias');
         const elementoHoras = document.getElementById('horas');
         const dataSelecionada = document.getElementById('dataSelecionada');
+        const elementoSegundas = document.getElementById('segundas');
+        const elementoTercas = document.getElementById('tercas');
+        const elementoQuartas = document.getElementById('quartas');
+        const elementoDiasUteis = document.getElementById('diasUteis');
+        const elementoHorasSegundas = document.getElementById('horasSegundas');
+        const elementoHorasTercas = document.getElementById('horasTercas');
+        const elementoHorasQuartas = document.getElementById('horasQuartas');
 
-       
+        // Configurar data mínima como hoje
         function configurarDataMinima() {
             const hoje = new Date();
             const dataFormatada = hoje.toISOString().split('T')[0];
             inputData.min = dataFormatada;
         }
 
+        // Salvar data no localStorage
         function salvarDataNoStorage(data) {
             localStorage.setItem('ultimaDataCalculada', data);
         }
 
-    
+        // Carregar data do localStorage
         function carregarDataDoStorage() {
             const dataSalva = localStorage.getItem('ultimaDataCalculada');
             if (dataSalva) {
                 inputData.value = dataSalva;
-             
+                // Calcular automaticamente se a data ainda é futura
                 const dataFutura = new Date(dataSalva);
                 const hoje = new Date();
                 if (dataFutura > hoje) {
@@ -145,33 +223,33 @@
             }
         }
 
-      
+        // Limpar mensagens de erro e resultados anteriores
         function limparInterface() {
             mensagemErro.classList.add('hidden');
             resultados.classList.add('hidden');
         }
 
-
+        // Exibir mensagem de erro
         function exibirErro(mensagem) {
             textoErro.textContent = mensagem;
             mensagemErro.classList.remove('hidden');
             resultados.classList.add('hidden');
         }
 
-
+        // Validar entrada do usuário
         function validarEntrada() {
             const dataInput = inputData.value;
             
- 
+            // Verificar se uma data foi selecionada
             if (!dataInput) {
                 exibirErro('Por favor, selecione uma data.');
                 return false;
             }
 
-    
+            // Verificar se a data é futura
             const dataFutura = new Date(dataInput);
             const hoje = new Date();
-            hoje.setHours(0, 0, 0, 0);
+            hoje.setHours(0, 0, 0, 0); // Zerar horas para comparação apenas de data
             dataFutura.setHours(0, 0, 0, 0);
 
             if (dataFutura <= hoje) {
@@ -182,52 +260,117 @@
             return true;
         }
 
+        // Contar sábados entre duas datas
         function contarSabados(dataInicio, dataFim) {
             let contador = 0;
             const dataAtual = new Date(dataInicio);
             
-          
+            // Iterar dia a dia até a data final
             while (dataAtual < dataFim) {
-              
+                // Verificar se é sábado (getDay() retorna 6 para sábado)
                 if (dataAtual.getDay() === 6) {
                     contador++;
                 }
-              
+                // Avançar um dia
                 dataAtual.setDate(dataAtual.getDate() + 1);
             }
             
             return contador;
         }
 
-    
+        // Contar dias específicos da semana entre duas datas
+        function contarDiaDaSemana(dataInicio, dataFim, diaDaSemana) {
+            let contador = 0;
+            const dataAtual = new Date(dataInicio);
+            
+            // Iterar dia a dia até a data final
+            while (dataAtual < dataFim) {
+                // Verificar se é o dia da semana desejado
+                if (dataAtual.getDay() === diaDaSemana) {
+                    contador++;
+                }
+                // Avançar um dia
+                dataAtual.setDate(dataAtual.getDate() + 1);
+            }
+            
+            return contador;
+        }
+
+        // Contar dias úteis (segunda a sexta) entre duas datas
+        function contarDiasUteis(dataInicio, dataFim) {
+            let contador = 0;
+            const dataAtual = new Date(dataInicio);
+            
+            // Iterar dia a dia até a data final
+            while (dataAtual < dataFim) {
+                const diaDaSemana = dataAtual.getDay();
+                // Verificar se é dia útil (1=segunda, 2=terça, 3=quarta, 4=quinta, 5=sexta)
+                if (diaDaSemana >= 1 && diaDaSemana <= 5) {
+                    contador++;
+                }
+                // Avançar um dia
+                dataAtual.setDate(dataAtual.getDate() + 1);
+            }
+            
+            return contador;
+        }
+
+        // Calcular tempo restante
         function calcularTempo() {
-         
+            // Limpar interface anterior
             limparInterface();
 
-            
+            // Validar entrada
             if (!validarEntrada()) {
                 return;
             }
 
+            // Obter datas
             const hoje = new Date();
             const dataFutura = new Date(inputData.value);
             
-       
+            // Calcular diferença em milissegundos
             const diferencaMs = dataFutura.getTime() - hoje.getTime();
             
-
+            // Converter para diferentes unidades
             const horasRestantes = Math.floor(diferencaMs / (1000 * 60 * 60));
             const diasRestantes = Math.floor(diferencaMs / (1000 * 60 * 60 * 24));
             const semanasRestantes = Math.floor(diasRestantes / 7);
             
-  
+            // Contar sábados
             const sabadosRestantes = contarSabados(hoje, dataFutura);
-   
+            
+            // Contar dias específicos da semana
+            const segundasRestantes = contarDiaDaSemana(hoje, dataFutura, 1); // 1 = segunda
+            const tercasRestantes = contarDiaDaSemana(hoje, dataFutura, 2);   // 2 = terça
+            const quartasRestantes = contarDiaDaSemana(hoje, dataFutura, 3);  // 3 = quarta
+            
+            // Contar dias úteis
+            const diasUteisRestantes = contarDiasUteis(hoje, dataFutura);
+            
+            // Calcular horas por dia da semana
+            const horasSegundasRestantes = segundasRestantes * 24;
+            const horasTercasRestantes = tercasRestantes * 24;
+            const horasQuartasRestantes = quartasRestantes * 24;
+            
+            // Exibir resultados principais
             elementoSabados.textContent = sabadosRestantes;
             elementoSemanas.textContent = semanasRestantes;
             elementoDias.textContent = diasRestantes;
             elementoHoras.textContent = horasRestantes.toLocaleString('pt-BR');
-
+            
+            // Exibir dias da semana específicos
+            elementoSegundas.textContent = segundasRestantes;
+            elementoTercas.textContent = tercasRestantes;
+            elementoQuartas.textContent = quartasRestantes;
+            elementoDiasUteis.textContent = diasUteisRestantes;
+            
+            // Exibir horas por dia da semana
+            elementoHorasSegundas.textContent = horasSegundasRestantes.toLocaleString('pt-BR');
+            elementoHorasTercas.textContent = horasTercasRestantes.toLocaleString('pt-BR');
+            elementoHorasQuartas.textContent = horasQuartasRestantes.toLocaleString('pt-BR');
+            
+            // Formatar e exibir data selecionada
             const dataFormatada = dataFutura.toLocaleDateString('pt-BR', {
                 weekday: 'long',
                 year: 'numeric',
@@ -236,23 +379,24 @@
             });
             dataSelecionada.textContent = dataFormatada;
             
-          
+            // Mostrar resultados
             resultados.classList.remove('hidden');
             
-    
+            // Salvar no localStorage
             salvarDataNoStorage(inputData.value);
         }
 
-
+        // Event Listeners
         btnCalcular.addEventListener('click', calcularTempo);
         
-        
+        // Permitir calcular pressionando Enter no campo de data
         inputData.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 calcularTempo();
             }
         });
 
+        // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             configurarDataMinima();
             carregarDataDoStorage();
